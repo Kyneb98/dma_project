@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'challenge_list.dart';
 
 void main() {
   runApp(const MyApp());
@@ -95,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
       width: 200,
       height: 50,
       child: FilledButton(
-        onPressed: _incrementCounter,
+        onPressed: runChallengeSequence,
         child: const Text('Start'),
       ),
     ),
