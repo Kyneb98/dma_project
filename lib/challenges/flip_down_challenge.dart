@@ -26,6 +26,11 @@ class _FlipDownChallengeState extends State<FlipDownChallenge> {
           _isCompleted = true;
         });
         widget.onCompleted?.call();
+        Future.delayed(const Duration(seconds: 1), () {
+          if (mounted) {
+            Navigator.of(context).pop();
+          }
+        });
       }
     });
   }

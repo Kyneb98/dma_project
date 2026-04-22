@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
       width: 200,
       height: 50,
       child: FilledButton(
-        onPressed: runChallengeSequence,
+        onPressed: () => runChallengeSequence(context),
         child: const Text('Start'),
       ),
     ),

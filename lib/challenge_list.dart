@@ -1,6 +1,8 @@
 import 'dart:math';
 
 // importer challenges nedenfor
+import 'package:flutter/material.dart';
+
 import 'challenges/random_press_challenge.dart';
 import 'challenges/shout_challenge.dart';
 import 'challenges/shake_challenge.dart';
@@ -29,11 +31,16 @@ Challenge getRandomChallenge() {
 }
 
 // sekvensen som kører de 7 challenges
-Future<void> runChallengeSequence() async {
+Future<void> runChallengeSequence(BuildContext context) async {
+  final List<Widget> challengeWidgets = [
+    const FlipDownChallenge(),
+    const FlipUpChallenge()
+    // ... etc
+  ];
   for (int i = 0; i < 7; i++) {
-    final challenge = getRandomChallenge();
+    final challenge = challengeWidgets[_rand.nextInt(challengeWidgets.length)];
     print("Starter challenge ${i + 1}");
-    await challenge();
+    await Navigator.of(context).push(MaterialPageRoute(builder: (_) => challenge));
     print("Challenge ${i + 1} færdig");
   }
 
