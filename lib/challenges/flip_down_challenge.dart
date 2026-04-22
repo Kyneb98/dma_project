@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class FlipDownChallenge extends StatefulWidget {
   final VoidCallback? onCompleted;
@@ -15,9 +16,17 @@ class _FlipDownChallengeState extends State<FlipDownChallenge> {
   bool _isCompleted = false;
   StreamSubscription<GyroscopeEvent>? _gyroscopeSubscription;
 
+  final AudioPlayer _audioPlayer = AudioPlayer(); // 🔊 lydafspiller
+
   @override
   void initState() {
     super.initState();
+
+    // 🔊 Afspil start-lyd
+    _audioPlayer.play(
+      AssetSource('sounds/flip_down_start.mp3'),
+    );
+
     _gyroscopeSubscription = SensorsPlatform.instance
         .gyroscopeEventStream()
         .listen((GyroscopeEvent event) {
@@ -25,7 +34,14 @@ class _FlipDownChallengeState extends State<FlipDownChallenge> {
         setState(() {
           _isCompleted = true;
         });
+
+        // 🔊 Afspil completion-lyd
+        _audioPlayer.play(
+          AssetSource('sounds/complete.mp3'),
+        );
+
         widget.onCompleted?.call();
+
         Future.delayed(const Duration(seconds: 1), () {
           if (mounted) {
             Navigator.of(context).pop();
@@ -38,6 +54,7 @@ class _FlipDownChallengeState extends State<FlipDownChallenge> {
   @override
   void dispose() {
     _gyroscopeSubscription?.cancel();
+    _audioPlayer.dispose(); // 🔊 ryd op efter lydafspiller
     super.dispose();
   }
 
