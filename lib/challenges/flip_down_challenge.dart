@@ -33,10 +33,7 @@ class _FlipDownChallengeState extends State<FlipDownChallenge> {
       });
     });
 
-    // Play start sound
-    _audioPlayer.play(
-      AssetSource('sounds/flip_down_start.mp3'),
-    );
+   
 
     _gyroscopeSubscription = SensorsPlatform.instance
         .gyroscopeEventStream()
@@ -75,18 +72,18 @@ class _FlipDownChallengeState extends State<FlipDownChallenge> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          margin: EdgeInsets.only(top: _bounce ? 18 : 0),
+          duration: const Duration(milliseconds: 250),
+          margin: EdgeInsets.only(top: _bounce ? 50 : 0),
           child: const Icon(
             Icons.arrow_downward,
-            size: 100,
+            size: 150,
             color: Colors.blue,
           ),
         ),
         const SizedBox(height: 20),
         Text(
-          _isCompleted ? 'Challenge Completed!' : 'Flip your phone down',
-          style: const TextStyle(fontSize: 24),
+          _isCompleted ? 'Challenge Completed!' : 'FLIP!',
+          style: const TextStyle(fontSize: 44),
         ),
       ],
     ),

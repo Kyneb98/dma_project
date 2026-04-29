@@ -18,14 +18,23 @@ class _FlipUpChallengeState extends State<FlipUpChallenge> {
 
   final AudioPlayer _audioPlayer = AudioPlayer(); // 🔊 lydafspiller
 
+  bool _bounce = false;
+
   @override
   void initState() {
     super.initState();
 
-    // 🔊 Afspil start-lyd
-    _audioPlayer.play(
-      AssetSource('sounds/flip_up_start.mp3'),
-    );
+    // Start bounce animation loop
+    Timer.periodic(const Duration(milliseconds: 250), (_) {
+      if (!mounted) return;
+      setState(() {
+        _bounce = !_bounce;
+      });
+    });
+
+    
+
+    
 
     _gyroscopeSubscription = SensorsPlatform.instance
         .gyroscopeEventStream()
@@ -61,23 +70,28 @@ class _FlipUpChallengeState extends State<FlipUpChallenge> {
     @override
 Widget build(BuildContext context) {
   return Scaffold(
-    body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.arrow_upward,   // 👈 change this per challenge
-            size: 100,
+  backgroundColor: _isCompleted ? Colors.green : Colors.white,
+  body: Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          margin: EdgeInsets.only(top: _bounce ? 0 : 50),
+          child: const Icon(
+            Icons.arrow_upward,
+            size: 150,
             color: Colors.blue,
           ),
-          const SizedBox(height: 20),
-          Text(
-            _isCompleted ? 'Challenge Completed!' : 'Flip your phone up',
-            style: const TextStyle(fontSize: 24),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          _isCompleted ? 'Challenge Completed!' : 'FLIP!',
+          style: const TextStyle(fontSize: 44),
+        ),
+      ],
     ),
-  );
-}
-}
+  ),
+);
+  }
+} 
