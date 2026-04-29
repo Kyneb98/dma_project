@@ -1,16 +1,18 @@
 import 'dart:math';
 
 // importer challenges nedenfor
+import 'package:dma_project/challenges/shake_challenge.dart';
 import 'package:flutter/material.dart';
 
 import 'challenges/random_press_challenge.dart';
 import 'challenges/shout_challenge.dart';
-import 'challenges/shake_challenge.dart';
 import 'challenges/punch_challenge.dart';
 import 'challenges/flip_up_challenge.dart';
 import 'challenges/flip_down_challenge.dart';
 import 'challenges/flip_left_challenge.dart';
 import 'challenges/flip_right_challenge.dart';
+import 'challenges/shake_challenge.dart';
+
 
 
 
@@ -34,10 +36,8 @@ Challenge getRandomChallenge() {
 Future<void> runChallengeSequence(BuildContext context) async {
   final List<Widget> challengeWidgets = [
     const FlipDownChallenge(),
-    const FlipUpChallenge(),
-    const FlipLeftChallenge(),
-    const FlipRightChallenge(),
-    const ShakeChallenge(),
+   
+    
     // ... etc
   ];
   for (int i = 0; i < 7; i++) {
