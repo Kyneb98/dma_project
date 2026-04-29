@@ -59,14 +59,25 @@ class _FlipDownChallengeState extends State<FlipDownChallenge> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          _isCompleted ? 'Challenge Completed!' : 'Flip your phone down',
-          style: const TextStyle(fontSize: 24),
-        ),
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.arrow_downward,   // 👈 change this per challenge
+            size: 100,
+            color: Colors.blue,
+          ),
+          const SizedBox(height: 20),
+          Text(
+            _isCompleted ? 'Challenge Completed!' : 'Flip your phone down',
+            style: const TextStyle(fontSize: 24),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 }
