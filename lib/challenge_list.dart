@@ -35,7 +35,11 @@ Challenge getRandomChallenge() {
 // sekvensen som kører de 7 challenges
 Future<void> runChallengeSequence(BuildContext context) async {
   final List<Widget> challengeWidgets = [
+    const FlipLeftChallenge(),
+    const FlipRightChallenge(),
     const FlipDownChallenge(),
+    const FlipUpChallenge(),
+    const ShakeChallenge(),
    
     
     // ... etc
