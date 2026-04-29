@@ -58,15 +58,26 @@ class _FlipUpChallengeState extends State<FlipUpChallenge> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          _isCompleted ? 'Challenge Completed!' : 'Flip your phone up',
-          style: const TextStyle(fontSize: 24),
-        ),
+    @override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.arrow_upward,   // 👈 change this per challenge
+            size: 100,
+            color: Colors.blue,
+          ),
+          const SizedBox(height: 20),
+          Text(
+            _isCompleted ? 'Challenge Completed!' : 'Flip your phone up',
+            style: const TextStyle(fontSize: 24),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 }
