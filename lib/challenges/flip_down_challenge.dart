@@ -74,16 +74,16 @@ class _FlipDownChallengeState extends State<FlipDownChallenge> {
         AnimatedContainer(
           duration: const Duration(milliseconds: 250),
           margin: EdgeInsets.only(top: _bounce ? 50 : 0),
-          child: const Icon(
+          child: Icon(
             Icons.arrow_downward,
             size: 150,
-            color: Colors.blue,
+            color: _isCompleted ? Colors.white : Colors.green,
           ),
         ),
         const SizedBox(height: 20),
         Text(
           _isCompleted ? 'Challenge Completed!' : 'FLIP!',
-          style: const TextStyle(fontSize: 44),
+          style: TextStyle(fontSize: 44, color: _isCompleted ? Colors.white : Colors.black),
         ),
       ],
     ),
