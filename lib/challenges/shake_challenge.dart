@@ -63,14 +63,29 @@ void dispose() {
 }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          _isCompleted ? 'Challenge Completed!' : 'Shake your phone',
-          style: const TextStyle(fontSize: 24),
-        ),
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: _isCompleted ? Colors.green : Colors.white,
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.vibration,
+            size: 150,
+            color: _isCompleted ? Colors.white : Colors.green,
+          ),
+          const SizedBox(height: 20),
+          Text(
+            _isCompleted ? 'Completed!' : 'Shake your phone',
+            style: TextStyle(
+              fontSize: 36,
+              color: _isCompleted ? Colors.white : Colors.black,
+            ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 }

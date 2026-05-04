@@ -103,22 +103,23 @@ class _ShoutChallengeState extends State<ShoutChallenge> {
                 Icon(
                   Icons.mic,
                   size: 100,
-                  color:Colors.blue,
+                  color:Colors.green,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  readingText,
+                  style: const TextStyle(fontSize: 28, color: Colors.black54),
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
                 Text(
                   _isCompleted
                       ? 'Challenge Completed!'
                       : 'Shout into the microphone',
-                  style: const TextStyle(fontSize: 24),
+                  style:  TextStyle(fontSize: 28, color: _isCompleted ? Colors.white : Colors.black),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  readingText,
-                  style: const TextStyle(fontSize: 18, color: Colors.black54),
-                  textAlign: TextAlign.center,
-                ),
+                
                 const SizedBox(height: 12),
                 if (!_isCompleted && !_hasError)
                   const Text(

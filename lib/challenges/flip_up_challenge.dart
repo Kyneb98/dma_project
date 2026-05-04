@@ -87,7 +87,7 @@ Widget build(BuildContext context) {
         ),
         const SizedBox(height: 20),
         Text(
-          _isCompleted ? 'Challenge Completed!' : 'FLIP!',
+          _isCompleted ? 'Completed!' : 'FLIP!',
           style: TextStyle(fontSize: 44, color: _isCompleted ? Colors.white : Colors.black),
         ),
       ],
