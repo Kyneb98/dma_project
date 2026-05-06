@@ -42,6 +42,7 @@ class _FlipUpChallengeState extends State<FlipUpChallenge> {
       if (!_isCompleted && event.x < -3.0) {
         setState(() {
           _isCompleted = true;
+          _bounce = true;
         });
 
         // 🔊 Afspil completion-lyd
@@ -78,16 +79,16 @@ Widget build(BuildContext context) {
         AnimatedContainer(
           duration: const Duration(milliseconds: 250),
           margin: EdgeInsets.only(top: _bounce ? 0 : 50),
-          child: const Icon(
+          child:  Icon(
             Icons.arrow_upward,
             size: 150,
-            color: Colors.blue,
+            color: _isCompleted ? Colors.white : Colors.green,
           ),
         ),
         const SizedBox(height: 20),
         Text(
-          _isCompleted ? 'Challenge Completed!' : 'FLIP!',
-          style: const TextStyle(fontSize: 44),
+          _isCompleted ? 'Completed!' : 'FLIP!',
+          style: TextStyle(fontSize: 44, color: _isCompleted ? Colors.white : Colors.black),
         ),
       ],
     ),

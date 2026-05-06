@@ -82,6 +82,7 @@ class _FlipLeftChallengeState extends State<FlipLeftChallenge> {
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Icon(
+      
         Icons.arrow_back,
         size: 150,
         color: _isCompleted ? Colors.white : Colors.green,

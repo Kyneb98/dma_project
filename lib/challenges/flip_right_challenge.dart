@@ -77,15 +77,15 @@ class _FlipRightChallengeState extends State<FlipRightChallenge> {
   child: Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      const Icon(
+       Icon(
         Icons.arrow_forward,
         size: 150,
-        color: Colors.blue,
+        color: _isCompleted ? Colors.white : Colors.green,
       ),
       const SizedBox(height: 20),
       Text(
-        _isCompleted ? 'Challenge Completed!' : 'FLIP!',
-        style: const TextStyle(fontSize: 44),
+        _isCompleted ? 'Completed!' : 'FLIP!',
+        style: TextStyle(fontSize: 44, color: _isCompleted ? Colors.white : Colors.black),
       ),
     ],
   ),
