@@ -82,7 +82,7 @@ class _FlipDownChallengeState extends State<FlipDownChallenge> {
         ),
         const SizedBox(height: 20),
         Text(
-          _isCompleted ? 'Challenge Completed!' : 'FLIP!',
+          _isCompleted ? 'Completed!' : 'FLIP!',
           style: const TextStyle(fontSize: 44),
         ),
       ],

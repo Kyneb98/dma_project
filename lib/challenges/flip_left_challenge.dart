@@ -38,8 +38,9 @@ class _FlipLeftChallengeState extends State<FlipLeftChallenge> {
     _gyroscopeSubscription = SensorsPlatform.instance
         .gyroscopeEventStream()
         .listen((GyroscopeEvent event) {
-      if (!_isCompleted && event.x < -3.0) { // Threshold for flip left
+      if (!_isCompleted && event.y < -3.0) { // Threshold for flip left
         setState(() {
+          _bounce = false;
           _isCompleted = true;
 
         _audioPlayer.play(
@@ -80,15 +81,15 @@ class _FlipLeftChallengeState extends State<FlipLeftChallenge> {
   child: Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      const Icon(
+      Icon(
         Icons.arrow_back,
         size: 150,
-        color: Colors.blue,
+        color: _isCompleted ? Colors.white : Colors.green,
       ),
       const SizedBox(height: 20),
       Text(
-        _isCompleted ? 'Challenge Completed!' : 'FLIP!',
-        style: const TextStyle(fontSize: 44),
+        _isCompleted ? 'Completed!' : 'FLIP!',
+        style:  TextStyle(fontSize: 44, color: _isCompleted ? Colors.white : Colors.black),
       ),
     ],
   ),

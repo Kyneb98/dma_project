@@ -65,6 +65,7 @@ void dispose() {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: _isCompleted ? Colors.green : Colors.white,
       body: Center(
         child: Text(
           _isCompleted ? 'Challenge Completed!' : 'Shake your phone',

@@ -31,10 +31,19 @@ Challenge getRandomChallenge() {
 Future<void> runChallengeSequence(BuildContext context) async {
   final List<Widget> challengeWidgets = [
     const FlipDownChallenge(),
+    const FlipUpChallenge(),
+    const FlipLeftChallenge(),
+    const FlipRightChallenge(),
+    const ShoutChallenge(),
+    const ShakeChallenge(),
    
     
     // ... etc
   ];
+  
+  // Start the timer
+  final stopwatch = Stopwatch()..start();
+  
   for (int i = 0; i < 7; i++) {
     final challenge = challengeWidgets[_rand.nextInt(challengeWidgets.length)];
     print("Starter challenge ${i + 1}");
@@ -44,5 +53,29 @@ Future<void> runChallengeSequence(BuildContext context) async {
     print("Challenge ${i + 1} færdig");
   }
 
+  // Stop the timer
+  stopwatch.stop();
+  
   print("Alle 7 challenges gennemført!");
+  print("Total tid: ${stopwatch.elapsed.inSeconds} sekunder");
+  
+  // Show results dialog with elapsed time
+  if (context.mounted) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Challenges Complete! 🎉'),
+        content: Text(
+          'Du brugte ${stopwatch.elapsed.inSeconds} sekunder\n'
+          '${stopwatch.elapsed.inMilliseconds} millisekunder',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
 }
