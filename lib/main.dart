@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'challenge_list.dart';
-
+import 'highscore_screen.dart';
 void main() {
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -106,8 +107,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            onPressed: () {},
-            child: const Text('Stop'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HighscoreScreen()),
+              );
+            },
+            child: const Text('Highscores'),
           ),
         ),
 

@@ -17,29 +17,41 @@ class _ShakeChallengeState extends State<ShakeChallenge> {
   bool _isCompleted = false;
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
 
-  final AudioPlayer _audioPlayer = AudioPlayer(); // 🔊 lydafspiller
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  // NEW VARIABLES
+  double _lastMagnitude = 0;
+  int _shakeScore = 0;
 
   @override
   void initState() {
     super.initState();
 
-   /* // 🔊 Afspil start-lyd
-    _audioPlayer.play(
-      AssetSource('sounds/shake_start.mp3'),
-    );*/
-
     _accelerometerSubscription = SensorsPlatform.instance
         .accelerometerEventStream()
         .listen((AccelerometerEvent event) {
-      // Calculate the magnitude of acceleration
-      double magnitude = sqrt(event.x * event.x + event.y * event.y + event.z * event.z);
-      if (!_isCompleted && magnitude > 15.0) { // Threshold for shake detection
+      // Calculate magnitude of acceleration
+      double magnitude = sqrt(
+        event.x * event.x +
+        event.y * event.y +
+        event.z * event.z,
+      );
+
+      // Calculate change in movement (delta)
+      double delta = (magnitude - _lastMagnitude).abs();
+      _lastMagnitude = magnitude;
+
+      // Count only strong back-and-forth movements
+      if (delta > 8.0) {
+        _shakeScore++;
+      }
+
+      // Require multiple shake motions
+      if (!_isCompleted && _shakeScore > 6) {
         setState(() {
           _isCompleted = true;
         });
 
-    
-        // 🔊 Afspil completion-lyd
         _audioPlayer.play(
           AssetSource('sounds/complete.mp3'),
         );
@@ -47,45 +59,43 @@ class _ShakeChallengeState extends State<ShakeChallenge> {
         widget.onCompleted?.call();
 
         Future.delayed(const Duration(seconds: 1), () {
-          if (mounted) {
-            Navigator.of(context).pop();
-          }
+          if (mounted) Navigator.of(context).pop();
         });
       }
     });
   }
 
   @override
-void dispose() {
-  _accelerometerSubscription?.cancel();
-  _audioPlayer.dispose(); // ryd op efter lydafspiller
-  super.dispose();
-}
+  void dispose() {
+    _accelerometerSubscription?.cancel();
+    _audioPlayer.dispose();
+    super.dispose();
+  }
 
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    backgroundColor: _isCompleted ? Colors.green : Colors.white,
-    body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.vibration,
-            size: 150,
-            color: _isCompleted ? Colors.white : Colors.green,
-          ),
-          const SizedBox(height: 20),
-          Text(
-            _isCompleted ? 'Completed!' : 'Shake your phone',
-            style: TextStyle(
-              fontSize: 36,
-              color: _isCompleted ? Colors.white : Colors.black,
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: _isCompleted ? Colors.green : Colors.white,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.vibration,
+              size: 150,
+              color: _isCompleted ? Colors.white : Colors.green,
             ),
-          ),
-        ],
+            const SizedBox(height: 20),
+            Text(
+              _isCompleted ? 'Completed!' : 'Shake your phone',
+              style: TextStyle(
+                fontSize: 36,
+                color: _isCompleted ? Colors.white : Colors.black,
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 }
