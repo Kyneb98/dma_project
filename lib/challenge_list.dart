@@ -40,8 +40,8 @@ Future<void> runChallengeSequence(BuildContext context) async {
     // const FlipRightChallenge(),
     // const ShoutChallenge(),
     // const ShakeChallenge(),
-    const RandomPressChallenge(),
-    // const PhotoChallenge(),
+    // const RandomPressChallenge(),
+    const PhotoChallenge(),
    
     
     // ... etc
