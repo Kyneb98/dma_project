@@ -16,26 +16,33 @@ class _FlipDownChallengeState extends State<FlipDownChallenge> {
   bool _isCompleted = false;
   StreamSubscription<GyroscopeEvent>? _gyroscopeSubscription;
 
-  final AudioPlayer _audioPlayer = AudioPlayer(); // 🔊 lydafspiller
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  // 🔽 Animation state
+  bool _bounce = false;
 
   @override
   void initState() {
     super.initState();
 
-    // 🔊 Afspil start-lyd
-    _audioPlayer.play(
-      AssetSource('sounds/flip_down_start.mp3'),
-    );
+    // Start bounce animation loop
+    Timer.periodic(const Duration(milliseconds: 250), (_) {
+      if (!mounted) return;
+      setState(() {
+        _bounce = !_bounce;
+      });
+    });
+
+   
 
     _gyroscopeSubscription = SensorsPlatform.instance
         .gyroscopeEventStream()
         .listen((GyroscopeEvent event) {
-      if (!_isCompleted && event.x > 3.0) { // Threshold for flip down
+      if (!_isCompleted && event.x > 3.0) {
         setState(() {
           _isCompleted = true;
         });
 
-        // 🔊 Afspil completion-lyd
         _audioPlayer.play(
           AssetSource('sounds/complete.mp3'),
         );
@@ -43,9 +50,7 @@ class _FlipDownChallengeState extends State<FlipDownChallenge> {
         widget.onCompleted?.call();
 
         Future.delayed(const Duration(seconds: 1), () {
-          if (mounted) {
-            Navigator.of(context).pop();
-          }
+          if (mounted) Navigator.of(context).pop();
         });
       }
     });
@@ -54,30 +59,35 @@ class _FlipDownChallengeState extends State<FlipDownChallenge> {
   @override
   void dispose() {
     _gyroscopeSubscription?.cancel();
-    _audioPlayer.dispose(); // 🔊 ryd op efter lydafspiller
+    _audioPlayer.dispose();
     super.dispose();
   }
 
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.arrow_downward,   // 👈 change this per challenge
-            size: 100,
-            color: Colors.blue,
+  Widget build(BuildContext context) {
+    return Scaffold(
+  backgroundColor: _isCompleted ? Colors.green : Colors.white,
+  body: Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          margin: EdgeInsets.only(top: _bounce ? 50 : 0),
+          child: Icon(
+            Icons.arrow_downward,
+            size: 150,
+            color: _isCompleted ? Colors.white : Colors.green,
           ),
-          const SizedBox(height: 20),
-          Text(
-            _isCompleted ? 'Challenge Completed!' : 'Flip your phone down',
-            style: const TextStyle(fontSize: 24),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          _isCompleted ? 'Completed!' : 'FLIP!',
+          style: TextStyle(fontSize: 44, color: _isCompleted ? Colors.white : Colors.black),
+        ),
+      ],
     ),
-  );
-}
-}
+  ),
+);
+  }
+} 
